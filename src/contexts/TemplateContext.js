@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { loadTemplates } from '../utils/templateLoader';
 
-// Sample default templates
+// Sample default templates as fallback
 const defaultTemplates = [
   {
     id: '1',
@@ -43,30 +44,7 @@ const defaultTemplates = [
     height: 675,
     backgroundColor: '#f5f5f5',
     thumbnail: 'https://via.placeholder.com/1200x675',
-    objects: [
-      {
-        type: 'textbox',
-        text: 'Presentation Title',
-        left: 600,
-        top: 100,
-        width: 800,
-        fontSize: 50,
-        fontFamily: 'Arial',
-        fill: '#333333',
-        textAlign: 'center'
-      },
-      {
-        type: 'textbox',
-        text: 'Subtitle goes here',
-        left: 600,
-        top: 200,
-        width: 800,
-        fontSize: 30,
-        fontFamily: 'Arial',
-        fill: '#666666',
-        textAlign: 'center'
-      }
-    ]
+    objects: []
   },
   {
     id: '3',
@@ -76,52 +54,16 @@ const defaultTemplates = [
     height: 1200,
     backgroundColor: '#e6f7ff',
     thumbnail: 'https://via.placeholder.com/800x1200',
-    objects: [
-      {
-        type: 'textbox',
-        text: 'EVENT NAME',
-        left: 400,
-        top: 200,
-        width: 600,
-        fontSize: 60,
-        fontFamily: 'Arial',
-        fill: '#1a1a1a',
-        textAlign: 'center'
-      },
-      {
-        type: 'textbox',
-        text: 'Date & Time',
-        left: 400,
-        top: 300,
-        width: 600,
-        fontSize: 30,
-        fontFamily: 'Arial',
-        fill: '#4d4d4d',
-        textAlign: 'center'
-      },
-      {
-        type: 'textbox',
-        text: 'Location',
-        left: 400,
-        top: 350,
-        width: 600,
-        fontSize: 30,
-        fontFamily: 'Arial',
-        fill: '#4d4d4d',
-        textAlign: 'center'
-      }
-    ]
+    objects: []
   }
 ];
 
 const TemplateContext = createContext();
 
 export const TemplateProvider = ({ children }) => {
-  const [templates, setTemplates] = useState(() => {
-    // Try to load templates from localStorage
-    const savedTemplates = localStorage.getItem('templates');
-    return savedTemplates ? JSON.parse(savedTemplates) : defaultTemplates;
-  });
+  const [templates, setTemplates] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   const [userProjects, setUserProjects] = useState(() => {
     // Try to load user projects from localStorage
@@ -129,9 +71,47 @@ export const TemplateProvider = ({ children }) => {
     return savedProjects ? JSON.parse(savedProjects) : {};
   });
   
+  // Load templates from files when component mounts
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        setLoading(true);
+        
+        // Try to load templates from localStorage first
+        const savedTemplates = localStorage.getItem('templates');
+        let parsedTemplates = savedTemplates ? JSON.parse(savedTemplates) : null;
+        
+        // If no templates in localStorage, load from files
+        if (!parsedTemplates || parsedTemplates.length === 0) {
+          const loadedTemplates = await loadTemplates();
+          
+          if (loadedTemplates && loadedTemplates.length > 0) {
+            parsedTemplates = loadedTemplates;
+          } else {
+            // Fall back to default templates if loading fails
+            parsedTemplates = defaultTemplates;
+          }
+        }
+        
+        setTemplates(parsedTemplates);
+      } catch (err) {
+        console.error('Failed to load templates:', err);
+        setError(err.message);
+        // Fall back to default templates on error
+        setTemplates(defaultTemplates);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchTemplates();
+  }, []);
+  
   // Save templates to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('templates', JSON.stringify(templates));
+    if (templates.length > 0) {
+      localStorage.setItem('templates', JSON.stringify(templates));
+    }
   }, [templates]);
   
   // Save user projects to localStorage whenever they change
@@ -182,6 +162,8 @@ export const TemplateProvider = ({ children }) => {
   return (
     <TemplateContext.Provider value={{
       templates,
+      loading,
+      error,
       getTemplateById,
       addTemplate,
       updateTemplate,
