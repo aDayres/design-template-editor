@@ -1,18 +1,27 @@
 {
-  "id": "presentation-template-1",
+  "id": "presentation-slide",
   "name": "Presentation Slide",
-  "description": "16:9 template for presentation slides",
+  "description": "Professional presentation template",
   "width": 1200,
   "height": 675,
   "backgroundColor": "#f5f5f5",
-  "thumbnail": "https://via.placeholder.com/1200x675/4caf50/ffffff?text=Presentation+Slide",
+  "thumbnail": "https://via.placeholder.com/1200x675/2196f3/ffffff?text=Presentation+Slide",
   "objects": [
+    {
+      "type": "rect",
+      "left": 0,
+      "top": 0,
+      "width": 1200,
+      "height": 100,
+      "fill": "#2196f3",
+      "selectable": false
+    },
     {
       "type": "textbox",
       "text": "Presentation Title",
       "left": 600,
-      "top": 150,
-      "width": 900,
+      "top": 180,
+      "width": 800,
       "fontSize": 50,
       "fontFamily": "Arial",
       "fill": "#333333",
@@ -20,31 +29,21 @@
     },
     {
       "type": "textbox",
-      "text": "Subtitle or key message",
+      "text": "Subtitle goes here",
       "left": 600,
-      "top": 240,
-      "width": 900,
+      "top": 250,
+      "width": 800,
       "fontSize": 30,
       "fontFamily": "Arial",
       "fill": "#666666",
       "textAlign": "center"
     },
     {
-      "type": "rect",
-      "left": 600,
-      "top": 90,
-      "width": 900,
-      "height": 10,
-      "fill": "#4caf50",
-      "rx": 0,
-      "ry": 0
-    },
-    {
       "type": "textbox",
-      "text": "• First bullet point\n• Second bullet point\n• Third bullet point\n• Fourth bullet point",
+      "text": "• Bullet point 1\n• Bullet point 2\n• Bullet point 3",
       "left": 600,
       "top": 400,
-      "width": 900,
+      "width": 800,
       "fontSize": 24,
       "fontFamily": "Arial",
       "fill": "#333333",
@@ -52,13 +51,13 @@
     },
     {
       "type": "textbox",
-      "text": "www.yourwebsite.com",
+      "text": "Your Name | Company",
       "left": 600,
       "top": 600,
-      "width": 900,
-      "fontSize": 16,
+      "width": 800,
+      "fontSize": 18,
       "fontFamily": "Arial",
-      "fill": "#999999",
+      "fill": "#666666",
       "textAlign": "center"
     }
   ]
