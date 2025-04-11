@@ -1,0 +1,84 @@
+{
+  "id": "event-flyer",
+  "name": "Event Flyer",
+  "description": "Promotional flyer for events and announcements",
+  "width": 800,
+  "height": 1200,
+  "backgroundColor": "#e6f7ff",
+  "thumbnail": "https://via.placeholder.com/800x1200/4caf50/ffffff?text=Event+Flyer",
+  "objects": [
+    {
+      "type": "rect",
+      "left": 0,
+      "top": 0,
+      "width": 800,
+      "height": 200,
+      "fill": "#4caf50",
+      "selectable": false
+    },
+    {
+      "type": "textbox",
+      "text": "EVENT NAME",
+      "left": 400,
+      "top": 300,
+      "width": 600,
+      "fontSize": 60,
+      "fontFamily": "Arial",
+      "fontWeight": "bold",
+      "fill": "#1a1a1a",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "Date & Time",
+      "left": 400,
+      "top": 400,
+      "width": 600,
+      "fontSize": 30,
+      "fontFamily": "Arial",
+      "fill": "#4d4d4d",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "Location",
+      "left": 400,
+      "top": 450,
+      "width": 600,
+      "fontSize": 30,
+      "fontFamily": "Arial",
+      "fill": "#4d4d4d",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "Description of the event goes here. Make it compelling and informative. Tell people why they should attend and what they'll experience.",
+      "left": 400,
+      "top": 550,
+      "width": 600,
+      "fontSize": 20,
+      "fontFamily": "Arial",
+      "fill": "#333333",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "Contact: email@example.com | (123) 456-7890",
+      "left": 400,
+      "top": 1100,
+      "width": 600,
+      "fontSize": 16,
+      "fontFamily": "Arial",
+      "fill": "#666666",
+      "textAlign": "center"
+    },
+    {
+      "type": "circle",
+      "left": 400,
+      "top": 800,
+      "radius": 100,
+      "fill": "#4caf50",
+      "opacity": 0.5
+    }
+  ]
+}
