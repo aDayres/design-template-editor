@@ -3,121 +3,199 @@ import {
   Typography, 
   Box, 
   Button, 
-  Grid, 
-  Paper, 
-  CircularProgress 
+  TextField,
+  Grid,
+  Paper,
+  CircularProgress,
+  Alert
 } from '@mui/material';
 import { fabric } from 'fabric';
-import ImageIcon from '@mui/icons-material/Image';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import LinkIcon from '@mui/icons-material/Link';
 
 // Sample stock images for quick access
 const stockImages = [
   {
     name: 'Abstract 1',
-    url: 'https://via.placeholder.com/300x200/2196f3/ffffff?text=Abstract+1'
+    url: 'https://via.placeholder.com/300x200/3f51b5/ffffff'
   },
   {
-    name: 'Abstract 2',
-    url: 'https://via.placeholder.com/300x200/4caf50/ffffff?text=Abstract+2'
+    name: 'Nature 1',
+    url: 'https://via.placeholder.com/300x200/4caf50/ffffff'
   },
   {
-    name: 'Abstract 3',
-    url: 'https://via.placeholder.com/300x200/f44336/ffffff?text=Abstract+3'
+    name: 'Business',
+    url: 'https://via.placeholder.com/300x200/ff9800/ffffff'
   },
   {
-    name: 'Placeholder',
-    url: 'https://via.placeholder.com/300x200/9c27b0/ffffff?text=Placeholder'
+    name: 'Technology',
+    url: 'https://via.placeholder.com/300x200/e91e63/ffffff'
   }
 ];
 
 const MediaControls = ({ canvas }) => {
+  const [imageUrl, setImageUrl] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
   
-  // Handle file upload
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file || !canvas) return;
+  // Add image from URL
+  const handleAddImageFromUrl = () => {
+    if (!canvas || !imageUrl) return;
     
     setUploading(true);
+    setError('');
     
-    const reader = new FileReader();
-    
-    reader.onload = (e) => {
-      const imgData = e.target.result;
-      
-      fabric.Image.fromURL(imgData, (img) => {
-        // Scale image to fit in canvas if needed
-        const canvasWidth = canvas.getWidth();
-        const canvasHeight = canvas.getHeight();
+    fabric.Image.fromURL(
+      imageUrl,
+      (img) => {
+        // Scale down large images to fit the canvas
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
         
         if (img.width > canvasWidth || img.height > canvasHeight) {
           const scaleFactor = Math.min(
             canvasWidth / img.width,
             canvasHeight / img.height
-          ) * 0.8; // 80% of the max size to leave some margin
+          ) * 0.8; // 80% of maximum size
           
           img.scale(scaleFactor);
         }
         
         // Center the image
         img.set({
-          left: canvas.getWidth() / 2,
-          top: canvas.getHeight() / 2,
-          originX: 'center',
-          originY: 'center'
+          left: canvas.width / 2 - (img.width * img.scaleX) / 2,
+          top: canvas.height / 2 - (img.height * img.scaleY) / 2
         });
         
         canvas.add(img);
         canvas.setActiveObject(img);
         canvas.renderAll();
+        
         setUploading(false);
-      });
+        setImageUrl('');
+      },
+      (err) => {
+        setError('Failed to load image. Please check the URL and try again.');
+        setUploading(false);
+      }
+    );
+  };
+  
+  // Add image from local file
+  const handleAddImageFromLocal = (event) => {
+    if (!canvas) return;
+    
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    // Check if the file is an image
+    if (!file.type.match('image.*')) {
+      setError('Please select an image file (JPEG, PNG, GIF, etc.)');
+      return;
+    }
+    
+    setUploading(true);
+    setError('');
+    
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+      fabric.Image.fromURL(
+        e.target.result,
+        (img) => {
+          // Scale down large images to fit the canvas
+          const canvasWidth = canvas.width;
+          const canvasHeight = canvas.height;
+          
+          if (img.width > canvasWidth || img.height > canvasHeight) {
+            const scaleFactor = Math.min(
+              canvasWidth / img.width,
+              canvasHeight / img.height
+            ) * 0.8; // 80% of maximum size
+            
+            img.scale(scaleFactor);
+          }
+          
+          // Center the image
+          img.set({
+            left: canvas.width / 2 - (img.width * img.scaleX) / 2,
+            top: canvas.height / 2 - (img.height * img.scaleY) / 2
+          });
+          
+          canvas.add(img);
+          canvas.setActiveObject(img);
+          canvas.renderAll();
+          
+          setUploading(false);
+        },
+        (err) => {
+          setError('Failed to load image. Please try again.');
+          setUploading(false);
+        }
+      );
+    };
+    
+    reader.onerror = () => {
+      setError('Failed to read the image file. Please try again.');
+      setUploading(false);
     };
     
     reader.readAsDataURL(file);
   };
   
-  // Add stock image to canvas
+  // Add stock image
   const handleAddStockImage = (imageUrl) => {
     if (!canvas) return;
     
     setUploading(true);
+    setError('');
     
-    fabric.Image.fromURL(imageUrl, (img) => {
-      // Scale image to fit in canvas if needed
-      const canvasWidth = canvas.getWidth();
-      const canvasHeight = canvas.getHeight();
-      
-      if (img.width > canvasWidth || img.height > canvasHeight) {
-        const scaleFactor = Math.min(
-          canvasWidth / img.width,
-          canvasHeight / img.height
-        ) * 0.8; // 80% of the max size to leave some margin
+    fabric.Image.fromURL(
+      imageUrl,
+      (img) => {
+        // Scale down large images to fit the canvas
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
         
-        img.scale(scaleFactor);
+        if (img.width > canvasWidth || img.height > canvasHeight) {
+          const scaleFactor = Math.min(
+            canvasWidth / img.width,
+            canvasHeight / img.height
+          ) * 0.8; // 80% of maximum size
+          
+          img.scale(scaleFactor);
+        }
+        
+        // Center the image
+        img.set({
+          left: canvas.width / 2 - (img.width * img.scaleX) / 2,
+          top: canvas.height / 2 - (img.height * img.scaleY) / 2
+        });
+        
+        canvas.add(img);
+        canvas.setActiveObject(img);
+        canvas.renderAll();
+        
+        setUploading(false);
+      },
+      (err) => {
+        setError('Failed to load stock image. Please try again.');
+        setUploading(false);
       }
-      
-      // Center the image
-      img.set({
-        left: canvas.getWidth() / 2,
-        top: canvas.getHeight() / 2,
-        originX: 'center',
-        originY: 'center'
-      });
-      
-      canvas.add(img);
-      canvas.setActiveObject(img);
-      canvas.renderAll();
-      setUploading(false);
-    });
+    );
   };
-
+  
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
         Media
       </Typography>
+      
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle2" gutterBottom>
@@ -125,37 +203,65 @@ const MediaControls = ({ canvas }) => {
         </Typography>
         
         <Button
-          variant="contained"
+          variant="outlined"
           component="label"
-          startIcon={<FileUploadIcon />}
-          disabled={uploading || !canvas}
+          startIcon={<AddPhotoAlternateIcon />}
           fullWidth
+          sx={{ mb: 2 }}
+          disabled={uploading || !canvas}
         >
-          {uploading ? <CircularProgress size={24} /> : 'Upload Image'}
+          Upload from Computer
           <input
             type="file"
             hidden
             accept="image/*"
-            onChange={handleFileUpload}
-            disabled={uploading}
+            onChange={handleAddImageFromLocal}
           />
         </Button>
         
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1, fontSize: '0.8rem' }}>
-          Supported formats: JPG, PNG, GIF (max 5MB)
+        <Typography variant="subtitle2" gutterBottom>
+          Add Image from URL
         </Typography>
+        
+        <TextField
+          label="Image URL"
+          variant="outlined"
+          fullWidth
+          size="small"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          disabled={uploading}
+          sx={{ mb: 1 }}
+        />
+        
+        <Button
+          variant="outlined"
+          startIcon={<LinkIcon />}
+          onClick={handleAddImageFromUrl}
+          disabled={!imageUrl || uploading || !canvas}
+          fullWidth
+        >
+          Add Image
+        </Button>
+        
+        {uploading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <CircularProgress size={24} />
+          </Box>
+        )}
       </Box>
       
-      <Box>
+      <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle2" gutterBottom>
           Stock Images
         </Typography>
         
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           {stockImages.map((image, index) => (
             <Grid item xs={6} key={index}>
-              <Paper 
-                sx={{ 
+              <Paper
+                sx={{
+                  p: 1,
                   cursor: 'pointer',
                   '&:hover': {
                     boxShadow: '0 0 0 2px #2196f3'
@@ -163,14 +269,14 @@ const MediaControls = ({ canvas }) => {
                 }}
                 onClick={() => handleAddStockImage(image.url)}
               >
-                <img 
-                  src={image.url} 
+                <img
+                  src={image.url}
                   alt={image.name}
                   style={{ width: '100%', height: 'auto', display: 'block' }}
                 />
-                <Box sx={{ p: 1 }}>
-                  <Typography variant="caption">{image.name}</Typography>
-                </Box>
+                <Typography variant="caption" align="center" sx={{ mt: 0.5, display: 'block' }}>
+                  {image.name}
+                </Typography>
               </Paper>
             </Grid>
           ))}
