@@ -1,0 +1,113 @@
+{
+  "id": "flyer-template-1",
+  "name": "Event Flyer",
+  "description": "Portrait flyer for event promotion",
+  "width": 800,
+  "height": 1200,
+  "backgroundColor": "#e6f7ff",
+  "thumbnail": "https://via.placeholder.com/800x1200/9c27b0/ffffff?text=Event+Flyer",
+  "objects": [
+    {
+      "type": "textbox",
+      "text": "EVENT NAME",
+      "left": 400,
+      "top": 200,
+      "width": 700,
+      "fontSize": 60,
+      "fontFamily": "Arial",
+      "fontWeight": "bold",
+      "fill": "#1a1a1a",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "Date & Time",
+      "left": 400,
+      "top": 300,
+      "width": 700,
+      "fontSize": 30,
+      "fontFamily": "Arial",
+      "fill": "#4d4d4d",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "Location",
+      "left": 400,
+      "top": 350,
+      "width": 700,
+      "fontSize": 30,
+      "fontFamily": "Arial",
+      "fill": "#4d4d4d",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquam, arcu id tempor egestas, urna dui gravida neque, eu sodales massa velit nec massa.",
+      "left": 400,
+      "top": 500,
+      "width": 600,
+      "fontSize": 20,
+      "fontFamily": "Arial",
+      "fill": "#333333",
+      "textAlign": "center"
+    },
+    {
+      "type": "rect",
+      "left": 400,
+      "top": 650,
+      "width": 500,
+      "height": 200,
+      "fill": "#ffffff",
+      "stroke": "#9c27b0",
+      "strokeWidth": 2,
+      "rx": 10,
+      "ry": 10
+    },
+    {
+      "type": "textbox",
+      "text": "Special Details",
+      "left": 400,
+      "top": 650,
+      "width": 500,
+      "fontSize": 24,
+      "fontFamily": "Arial",
+      "fill": "#9c27b0",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "• Feature 1\n• Feature 2\n• Feature 3",
+      "left": 400,
+      "top": 700,
+      "width": 400,
+      "fontSize": 20,
+      "fontFamily": "Arial",
+      "fill": "#333333",
+      "textAlign": "left"
+    },
+    {
+      "type": "textbox",
+      "text": "CONTACT INFO",
+      "left": 400,
+      "top": 900,
+      "width": 700,
+      "fontSize": 20,
+      "fontFamily": "Arial",
+      "fontWeight": "bold",
+      "fill": "#1a1a1a",
+      "textAlign": "center"
+    },
+    {
+      "type": "textbox",
+      "text": "email@example.com | (123) 456-7890 | www.example.com",
+      "left": 400,
+      "top": 940,
+      "width": 700,
+      "fontSize": 16,
+      "fontFamily": "Arial",
+      "fill": "#4d4d4d",
+      "textAlign": "center"
+    }
+  ]
+}
