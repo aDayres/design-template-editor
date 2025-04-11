@@ -1,18 +1,18 @@
 {
-  "id": "social-media-template-1",
+  "id": "social-media-post",
   "name": "Social Media Post",
-  "description": "Square template for Instagram and Facebook posts",
+  "description": "Perfect for Instagram and Facebook posts",
   "width": 800,
   "height": 800,
   "backgroundColor": "#ffffff",
-  "thumbnail": "https://via.placeholder.com/800x800/2196f3/ffffff?text=Social+Media+Post",
+  "thumbnail": "https://via.placeholder.com/800x800/3f51b5/ffffff?text=Social+Media+Post",
   "objects": [
     {
       "type": "textbox",
       "text": "Your Headline Here",
       "left": 400,
       "top": 300,
-      "width": 500,
+      "width": 600,
       "fontSize": 40,
       "fontFamily": "Arial",
       "fill": "#333333",
@@ -20,34 +20,14 @@
     },
     {
       "type": "textbox",
-      "text": "Add your subtext here - describe your promotion or event",
+      "text": "Add your subtext here",
       "left": 400,
       "top": 400,
-      "width": 500,
+      "width": 600,
       "fontSize": 24,
       "fontFamily": "Arial",
       "fill": "#666666",
       "textAlign": "center"
-    },
-    {
-      "type": "rect",
-      "left": 400,
-      "top": 150,
-      "width": 300,
-      "height": 5,
-      "fill": "#2196f3",
-      "rx": 0,
-      "ry": 0
-    },
-    {
-      "type": "rect",
-      "left": 400,
-      "top": 500,
-      "width": 300,
-      "height": 5,
-      "fill": "#2196f3",
-      "rx": 0,
-      "ry": 0
     }
   ]
 }
