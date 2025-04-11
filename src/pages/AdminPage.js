@@ -335,53 +335,50 @@ const AdminPage = () => {
             variant="contained" 
             color="primary"
           >
-            {editTemplate ? 'Update' : 'Create'}
+            {editTemplate ? 'Update' : 'Add'}
           </Button>
         </DialogActions>
       </Dialog>
       
       {/* Preview Template Dialog */}
       <Dialog open={previewDialogOpen} onClose={() => setPreviewDialogOpen(false)} maxWidth="md">
-        <DialogTitle>
-          Template Preview: {previewTemplate?.name}
-        </DialogTitle>
+        <DialogTitle>Template Preview</DialogTitle>
         <DialogContent>
           {previewTemplate && (
             <Box>
-              <img 
-                src={previewTemplate.thumbnail} 
-                alt={previewTemplate.name}
-                style={{ width: '100%', marginBottom: '16px' }}
-              />
+              <Box sx={{ textAlign: 'center', mb: 2 }}>
+                <img 
+                  src={previewTemplate.thumbnail} 
+                  alt={previewTemplate.name}
+                  style={{ 
+                    maxWidth: '100%',
+                    maxHeight: '300px',
+                    border: '1px solid #ddd'
+                  }}
+                />
+              </Box>
               
-              <Typography variant="h6" gutterBottom>Details</Typography>
+              <Typography variant="h6" gutterBottom>{previewTemplate.name}</Typography>
+              <Typography variant="body1" paragraph>{previewTemplate.description}</Typography>
               
-              <List>
+              <Typography variant="subtitle2" gutterBottom>Template Details:</Typography>
+              <List dense>
                 <ListItem>
-                  <ListItemText
-                    primary="ID"
-                    secondary={previewTemplate.id}
-                  />
+                  <ListItemText primary="ID" secondary={previewTemplate.id} />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                  <ListItemText
-                    primary="Dimensions"
-                    secondary={`${previewTemplate.width} × ${previewTemplate.height}`}
-                  />
+                  <ListItemText primary="Dimensions" secondary={`${previewTemplate.width} × ${previewTemplate.height}`} />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                  <ListItemText
-                    primary="Description"
-                    secondary={previewTemplate.description}
-                  />
+                  <ListItemText primary="Background Color" secondary={previewTemplate.backgroundColor} />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                  <ListItemText
-                    primary="Objects"
-                    secondary={`${previewTemplate.objects ? previewTemplate.objects.length : 0} objects in template`}
+                  <ListItemText 
+                    primary="Objects" 
+                    secondary={`${previewTemplate.objects ? previewTemplate.objects.length : 0} element(s)`} 
                   />
                 </ListItem>
               </List>
@@ -396,7 +393,7 @@ const AdminPage = () => {
             onClick={() => {
               setPreviewDialogOpen(false);
               if (previewTemplate) {
-                handleEditTemplate(previewTemplate.id);
+                navigate(`/editor/${previewTemplate.id}`);
               }
             }}
           >
